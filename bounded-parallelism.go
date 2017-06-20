@@ -94,6 +94,12 @@ func MD5All(root string) (map[string][md5.Size]byte, error) {
 	return m, nil
 }
 
+// My take on this pattern is
+// You divide the process into 3 stages
+// First, you walk on the directory tree
+// Second, because is bounded, specify the num of workers that will process the result for step one
+// Third, combine the result from step two
+// All communications is connected by `channels`, channels `Paths` and `c`
 func main() {
 	m, err := MD5All(os.Args[1])
 	if err != nil {
